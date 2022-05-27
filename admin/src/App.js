@@ -6,7 +6,7 @@ const App = () => {
   return (
     <div>
       <div>
-        <h1>Video Chat</h1>
+        <h1 className="text-center text-2xl bg-black text-white py-3">Video Chat</h1>
       </div>
       <VideoPlayer />
       <Sidebar>

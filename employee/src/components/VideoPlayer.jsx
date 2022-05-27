@@ -6,12 +6,12 @@ const VideoPlayer = () => {
     useContext(SocketContext);
 
   return (
-    <div>
+    <div className="flex justify-around">
       {stream && (
         <div>
           <div>
             <h1>{name || "Name"}</h1>
-            <video playsInline muted ref={myVideo} autoPlay />
+            <video className="w-[300px]" playsInline muted ref={myVideo} autoPlay />
           </div>
         </div>
       )}
@@ -19,7 +19,7 @@ const VideoPlayer = () => {
         <div>
           <div>
             <h1>{call.name || "Name"}</h1>
-            <video playsInline ref={userVideo} autoPlay />
+            <video className="w-[300px]" playsInline ref={userVideo} autoPlay />
           </div>
         </div>
       )}

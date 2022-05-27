@@ -14,6 +14,8 @@ const ContextProvider = ({ children }) => {
   const [name, setName] = useState("");
   const [call, setCall] = useState({});
   const [me, setMe] = useState("");
+  const [users, setUsers] = useState({});
+  const [callerId, setCallerId] = useState("");
 
   const myVideo = useRef();
   const userVideo = useRef();
@@ -27,11 +29,18 @@ const ContextProvider = ({ children }) => {
     });
 
     socket.on("me", (id) => setMe(id));
+    socket.on("users", (users) => setUsers(users));
 
     socket.on("callUser", ({ from, name: callerName, signal }) => {
       setCall({ isReceivingCall: true, from, name: callerName, signal });
     });
-  }, []);
+
+    socket.on("hangup", () => {
+      leaveCall(callerId);
+    });
+  }, [callerId]);
+
+  console.log(me, users);
 
   const answerCall = () => {
     setCallAccepted(true);
@@ -71,10 +80,12 @@ const ContextProvider = ({ children }) => {
     connectionRef.current = peer;
   };
 
-  const leaveCall = () => {
+  const leaveCall = (id) => {
     setCallEnded(true);
 
     connectionRef.current.destroy();
+
+    socket.on("hangup", { to: id });
 
     // window.location.reload();
   };
@@ -91,9 +102,11 @@ const ContextProvider = ({ children }) => {
         setName,
         callEnded,
         me,
+        users,
         callUser,
         leaveCall,
         answerCall,
+        setCallerId,
       }}
     >
       {children}
