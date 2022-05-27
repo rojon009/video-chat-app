@@ -4,11 +4,13 @@ import { SocketContext } from "../Context";
 const Notifications = () => {
   const { answerCall, call, callAccepted } = useContext(SocketContext);
 
-  useEffect(() => {
-    if (call.isReceivingCall && !callAccepted) {
-      answerCall();
-    }
-  }, [call.isReceivingCall, callAccepted, answerCall]);
+  /**
+   useEffect(() => {
+     if (call.isReceivingCall && !callAccepted) {
+       answerCall();
+      }
+    }, [call.isReceivingCall, callAccepted, answerCall]);
+  */
 
   return (
     <>
